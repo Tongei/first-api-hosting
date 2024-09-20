@@ -7,5 +7,4 @@ const employee = (app) => {
     app.delete("/api/employee/:id", employeeController.deleteEmployee);
     app.put("/api/employee/:id", employeeController.updateEmployee);
 }
-
 module.exports = employee;

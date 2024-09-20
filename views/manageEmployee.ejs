@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+  </head>
+
+  <style>
+        * {
+	box-sizing: border-box;
+}
+
+body {
+	
+	font-family: Montserrat, sans-serif;
+	
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	flex-direction: column;
+
+	min-height: 100vh;
+	margin: 0;
+}
+
+h3 {
+	margin: 10px 0;
+}
+
+h6 {
+	margin: 5px 0;
+	text-transform: uppercase;
+}
+
+p {
+	font-size: 14px;
+	line-height: 21px;
+}
+
+.container-form {
+    background-color: #28223F;
+    width: 100%;
+    max-width: 500px;
+    margin: 50px auto;
+    background: #fff;
+    padding: 20px;
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
+    border-radius: 10px;
+}
+
+/* Form Styles */
+form {
+    display: flex;
+    flex-direction: column;
+}
+
+form label {
+    font-size: 1.1em;
+    color: #333;
+    margin-bottom: 5px;
+}
+
+input[type="text"],
+input[type="number"],
+input[type="submit"] {
+    padding: 10px;
+    margin-bottom: 15px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 1em;
+    width: 100%;
+}
+
+form input[type="text"]:focus,
+form input[type="number"]:focus {
+    outline: none;
+    border-color: #03BFCB;
+    box-shadow: 0 0 8px rgba(3, 191, 203, 0.2);
+}
+
+button[type="submit"]{
+    background-color: #03BFCB;
+    color: white;
+    border: none;
+    cursor: pointer;
+    font-size: 1.1em;
+    padding: 10px;
+    width: 100%;
+    transition: background-color 0.3s ease;
+}
+
+button[type="submit"]:hover,
+form input[type="submit"]:hover {
+    background-color: #0299a6;
+}
+
+/* Error Message */
+form p.error {
+    color: red;
+    font-weight: bold;
+}
+.container {
+  width: 1000px;
+  margin-left: auto;
+  margin-right: auto;
+  padding-left: 10px;
+  padding-right: 10px;
+}
+
+h2 {
+  font-size: 26px;
+  margin: 20px 0;
+  text-align: center;
+  small {
+    font-size: 0.5em;
+  }
+}
+
+.responsive-table {
+  li {
+    border-radius: 3px;
+    padding: 25px 30px;
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 25px;
+  }
+  .table-header {
+    background-color: #95A5A6;
+    font-size: 14px;
+    text-transform: uppercase;
+    letter-spacing: 0.03em;
+  }
+  .table-row {
+    background-color: #ffffff;
+    box-shadow: 0px 0px 9px 0px rgba(0,0,0,0.1);
+  }
+  .col-1 {
+    flex-basis: 10%;
+  }
+  .col-2 {
+    flex-basis: 40%;
+  }
+  .col-3 {
+    flex-basis: 25%;
+  }
+  .col-4 {
+    flex-basis: 25%;
+  }
+  
+  @media all and (max-width: 767px) {
+    .table-header {
+      display: none;
+    }
+    li {
+      display: block;
+    }
+    .col {
+      
+      flex-basis: 100%;
+      
+    }
+    .col {
+      display: flex;
+      padding: 10px 0;
+      &:before {
+        color: #6C7A89;
+        padding-right: 10px;
+        content: attr(data-label);
+        flex-basis: 50%;
+        text-align: right;
+      }
+    }
+  }
+}
+    </style>
+
+  <body>
+
+    <div class="container-form">
+      <h2>Create Employee</h2>
+      <form id="mainForm" action="/api/employee" method="POST">
+        <input id="handleUpdate" style="display: none;" type="hidden"
+          name="_method" value="PUT">
+        <label for="full_name">Full Name</label>
+        <input type="text" id="full_name" name="full_name" required>
+
+        <label for="salary">Salary</label>
+        <input type="number" id="salary" name="salary" required>
+
+        <label for="city">City</label>
+        <input type="text" id="city" name="city" required>
+
+        <button type="submit">Create Employee</button>
+
+      </form>
+    </div>
+    <div class="container">
+      <h2>Responsive Tables Using LI <small>Triggers on 767px</small></h2>
+      <ul class="responsive-table">
+        <li class="table-header">
+          <div class="col col-1">Id</div>
+          <div class="col col-2">Name</div>
+          <div class="col col-3">Salary</div>
+          <div class="col col-4">City</div>
+          <div class="col col-4">Action</div>
+        </li>
+        <% emp_list.forEach(emps => { %>
+        <li class="table-row">
+          <div class="col col-1"><%= emps.emp_id %></div>
+          <div class="col col-2"><%= emps.full_name %></div>
+          <div class="col col-3">$ <%= emps.salary %></div>
+          <div class="col col-4"><%= emps.city %></div>
+          <div class="col col-4" style>
+            <form id="removeForm">
+              <input type="hidden" name="_method" value="DELETE">
+              <button onclick="removeEmployee('<%= emps.emp_id %>')"
+                type="button">Remove</button>
+            </form>
+            <form id="editForm" style="margin: 5px 0px;">
+              <button type="button"
+                onclick="editEmployee('<%= emps.emp_id %>', '<%= emps.full_name %>', '<%= emps.salary %>', '<%= emps.city %>')">Edit</button>
+            </form>
+
+            <form id="detailForm">
+              <button type="button"
+                onclick="DetailEmployee('<%= emps.emp_id %>')">View
+                Detail</button>
+            </form>
+          </div>
+        </li>
+        <% }) %>
+      </div>
+
+      <script>
+        function editEmployee(empId, fullName, salary, city) {
+          document.getElementById('full_name').value = fullName;
+          document.getElementById('salary').value = salary;
+          document.getElementById('city').value = city;
+          document.querySelector('#mainForm').action = `/api/employee/${empId}?_method=PUT`;
+          document.querySelector('#handleUpdate').style.display = 'block';
+          document.querySelector('#mainForm button[type="submit"]').innerText = 'Update Employee';
+        }
+
+        function DetailEmployee(empId) {
+          location = `/api/employee/${empId}`;
+        }
+        function removeEmployee(empId){
+          const form = document.querySelector("#removeForm");
+          form.method = 'POST';
+          form.action = `/api/employee/${empId}?_method=DELETE`;
+          form.submit();
+      }
+      </script>
+    </body>
+  </html>

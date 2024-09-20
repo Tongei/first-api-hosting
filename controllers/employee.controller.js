@@ -1,4 +1,4 @@
-const db = require("../utils/db");
+const db = require("../db/db");
 
 const getAllEmp = (req, res) => {
     let sql = "SELECT * FROM employees";
@@ -9,13 +9,14 @@ const getAllEmp = (req, res) => {
             //     emp_list : records
             // });
 
-            res.render('index', {emp_list : records});
+            // res.render('employeesCard', {emp_list : records});
+            res.render('manageEmployee', {emp_list : records});
         }else {
-            res.json({
-                error : true,
-                error : error
-            });
-            res.render('index', {error : error});
+            // res.json({
+            //     error : true,
+            //     error : error
+            // });
+            res.render('manageEmployee', {error : error});
         }
     })
 }
@@ -41,31 +42,23 @@ const getEmployeeById = (req, res) => {
             res.render('detail', {error : error});
         }
     })
-
-    
-
 }
 
 const createEmployee = (req, res) => {
     let sql = "INSERT INTO employees (full_name, salary, city) VALUES(?, ?, ?)";
-    const {full_name, salary, city} = req.body;
+    const { full_name, salary, city } = req.body;
 
     const param = [full_name, salary, city];
 
     db.query(sql, param, (error, record) => {
-        if(!error){
-            res.json({
-                   success : true,
-                   data : record
-            })
-        }else{
-            res.json({
-                error :true,
-                error : error
-            })
+        if (!error) {
+            res.redirect('/api/employee');
+        } else {
+            res.render('manageEmployee', { error: error.message });
         }
-    })
+    });
 }
+
 
 const deleteEmployee = (req, res) => {
     let sql = "DELETE FROM employees WHERE emp_id = ?"
@@ -76,14 +69,16 @@ const deleteEmployee = (req, res) => {
 
     db.query(sql, param, (error, record) =>{
         if(!error){
-            res.json({
-                success : true
-            })
+            // res.json({
+            //     success : true
+            // })
+            res.redirect('/api/employee');
         }else{
-            res.json({
-                error : true,
-                error  :error
-            })
+            // res.json({
+            //     error : true,
+            //     error  :error
+            // })
+            res.render('manageEmployee', { error: error.message });
         }
     })
 }
@@ -102,15 +97,18 @@ const updateEmployee = (req, res) =>{
 
     db.query(sql, param, (error, record) => {
         if(!error){
-            res.json({
-                success : true,
-                data : record
-            })
+            // res.json({
+            //     success : true,
+            //     data : record
+            // })
+            res.redirect('/api/employee');
+            // res.render('manageEmployee', { success: 'Employee update successfully!' });
         }else{
-            res.json({
-                error : true,
-                error : error
-            })
+            // res.json({
+            //     error : true,
+            //     error : error
+            // });
+            res.render('manageEmployee', { error: error.message });
         }
     })
 

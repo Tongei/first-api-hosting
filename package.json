@@ -13,6 +13,7 @@
   "dependencies": {
     "ejs": "^3.1.10",
     "express": "^4.21.0",
+    "method-override": "^3.0.0",
     "mysql": "^2.18.1",
     "nodemon": "^3.1.4"
   }

@@ -1,12 +1,12 @@
 <!DOCTYPE html>
 <html lang="en">
-    <head>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>Document</title>
-    </head>
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+  </head>
 
-    <style>
+  <style>
     :root {
   --indent: 0;
 }
@@ -113,30 +113,31 @@ img {
 }
 
 </style>
-    <body>
+  <body>
 
-        <% emp_data.forEach(emp => { %>
-        <div class="wrapper">
-            <figure class="card">
-                <img
-                    src="https://randomuser.me/api/portraits/women/79.jpg"
-                    width="640"
-                    height="640"
-                    alt />
-                <figcaption>
-                    <blockquote>
-                        <%= emp.full_name %>
-                    </blockquote>
-                    <cite>Salary : <%= emp.salary %></cite>
-                    <p class="credit">
-                        <strong> City : <%= emp.city %></strong>
-                        <br>
-                        <strong>ID : <%= emp.emp_id %></strong>
+    <% emp_data.forEach(emp => { %>
+    <div class="wrapper">
+      <figure class="card">
+        <img
+          src="https://randomuser.me/api/portraits/women/79.jpg"
+          width="640"
+          height="640"
+          alt />
+        <figcaption>
+          <blockquote>
+            <%= emp.full_name %>
+          </blockquote>
+          <cite>Salary : <%= emp.salary %></cite>
+          <p class="credit">
+            <strong> City : <%= emp.city %></strong>
+            <br>
+            <strong>ID : <%= emp.emp_id %></strong>
 
-                    </p>
-                </figcaption>
-            </figure>
-        </div>
-        <% }) %>
-    </body>
+          </p>
+        </figcaption>
+      </figure>
+    </div>
+    <a href="../employee/">BACK</a>
+    <% }) %>
+  </body>
 </html>
